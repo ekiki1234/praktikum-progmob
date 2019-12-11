@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/navHomeUser"
+        android:icon="@drawable/ic_home_black_24dp"
+        android:title="Home" />
+
+    <item
+        android:id="@+id/navCart"
+        android:icon="@drawable/ic_shopping_cart_black_24dp"
+        android:title="Home" />
+
+    <item
+        android:id="@+id/navPesanan"
+        android:icon="@drawable/ic_history_black_24dp"
+        android:title="History"/>
+
+    <item
+        android:id="@+id/navAcc"
+        android:icon="@drawable/ic_account_circle_black_24dp"
+        android:title="Akun" />
+
+</menu>
