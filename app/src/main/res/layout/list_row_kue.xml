@@ -11,13 +11,14 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <ImageView
+        <com.android.volley.toolbox.NetworkImageView
             android:id="@+id/gambar"
             android:layout_width="50dp"
             android:layout_height="50dp" />
         
         <LinearLayout
             android:layout_width="match_parent"
+            android:layout_marginLeft="10dp"
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
@@ -32,22 +33,26 @@
                 android:layout_marginBottom="5dp"
                 android:textStyle="bold"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:text="nama"/>
 
             <TextView
                 android:id="@+id/keterangan"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:text="keterangan"/>
 
             <TextView
                 android:id="@+id/harga"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:text="harga"/>
 
             <TextView
                 android:id="@+id/status"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:text="status"/>
 
 
         </LinearLayout>

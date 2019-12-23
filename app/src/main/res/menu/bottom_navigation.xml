@@ -12,7 +12,7 @@
         android:title="Tambah"/>
 
     <item
-        android:id="@+id/navOrder"
+        android:id="@+id/navHistory"
         android:icon="@drawable/ic_history_black_24dp"
         android:title="Pesanan" />
 

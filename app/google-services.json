@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "707806178701",
+    "firebase_url": "https://praktikum-progmob20.firebaseio.com",
+    "project_id": "praktikum-progmob20",
+    "storage_bucket": "praktikum-progmob20.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:707806178701:android:ac6f37b0c1fd4aaffe21c4",
+        "android_client_info": {
+          "package_name": "example.progmob.com"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "707806178701-achla7932vrbpau5ckornt0697mtflar.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBjuSteGPaxrrClx2OWJLOL8hw_ZwPTGsQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "707806178701-achla7932vrbpau5ckornt0697mtflar.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

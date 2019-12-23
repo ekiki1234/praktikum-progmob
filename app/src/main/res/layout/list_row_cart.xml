@@ -43,10 +43,17 @@
                 android:text="harga"/>
 
             <TextView
+                android:id="@+id/jumlah"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="jumlah"/>
+
+            <TextView
                 android:id="@+id/keterangan"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="keterangan"/>
+
 
         </LinearLayout>
 
@@ -54,6 +61,14 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/total"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentBottom="true"
+                android:text="total"/>
 
         </RelativeLayout>
 

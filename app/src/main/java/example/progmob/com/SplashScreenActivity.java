@@ -7,26 +7,14 @@ import android.os.Bundle;
 
 public class SplashScreenActivity extends AppCompatActivity {
 
-    private int waktu_loading=4000;
-
-    //4000=4 detik
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-
-        setContentView(R.layout.activity_splash_screen);
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-
-                //setelah loading maka akan langsung berpindah ke home activity
-                Intent intent=new Intent(SplashScreenActivity.this, LoginActivity.class);
-                startActivity(intent);
-                finish();
-
-            }
-        },waktu_loading);
+        // langsung pindah ke MainActivity atau activity lain
+        // begitu memasuki splash screen ini
+        Intent intent = new Intent(this, LoginActivity.class);
+        startActivity(intent);
+        finish();
     }
 }

@@ -74,6 +74,7 @@ public class HomeFragment extends Fragment implements SwipeRefreshLayout.OnRefre
     private static final String TAG_SUCCESS = "success";
     private static final String TAG_MESSAGE = "message";
     public static final String TAG_ROLE = "role";
+    public static final String TAG_GAMBAR   = "gambar";
 
     String tag_json_obj = "json_obj_req";
 
@@ -166,6 +167,10 @@ public class HomeFragment extends Fragment implements SwipeRefreshLayout.OnRefre
                         item.setKeterangan(obj.getString(TAG_KETERANGAN));
                         item.setHarga(obj.getString(TAG_HARGA));
                         item.setStatus(obj.getString(TAG_STATUS));
+
+                        if (obj.getString(TAG_GAMBAR) != "") {
+                            item.setGambar(obj.getString(TAG_GAMBAR));
+                        }
 
                         //menambah item ke array
                         itemList.add(item);
@@ -308,7 +313,7 @@ public class HomeFragment extends Fragment implements SwipeRefreshLayout.OnRefre
         dialogView = inflater.inflate(R.layout.form_edit_kue, null);
         dialog.setView(dialogView);
         dialog.setCancelable(true);
-        dialog.setIcon(R.mipmap.ic_launcher);
+        dialog.setIcon(R.mipmap.logo);
         dialog.setTitle("Form Edit Kue");
 
         txt_id      = dialogView.findViewById(R.id.txt_id);

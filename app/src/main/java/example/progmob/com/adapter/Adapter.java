@@ -11,6 +11,9 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
+import com.android.volley.toolbox.ImageLoader;
+import com.android.volley.toolbox.NetworkImageView;
+
 import example.progmob.com.R;
 import example.progmob.com.app.AppController;
 import example.progmob.com.data.Data;
@@ -21,6 +24,7 @@ public class Adapter extends BaseAdapter {
     private Activity activity;
     private LayoutInflater inflater;
     private List<Data> items;
+    ImageLoader imageLoader;
 
     public Adapter(Activity activity, List<Data> items) {
         this.activity = activity;
@@ -52,11 +56,15 @@ public class Adapter extends BaseAdapter {
         if (convertView == null)
             convertView = inflater.inflate(R.layout.list_row_kue, null);
 
+        if (imageLoader == null)
+            imageLoader = AppController.getInstance().getImageLoader();
+
         TextView id = (TextView) convertView.findViewById(R.id.id);
         TextView nama = (TextView) convertView.findViewById(R.id.nama);
         TextView keterangan = (TextView) convertView.findViewById(R.id.keterangan);
         TextView harga = (TextView) convertView.findViewById(R.id.harga);
         TextView status = (TextView) convertView.findViewById(R.id.status);
+        NetworkImageView thumbNail = (NetworkImageView) convertView.findViewById(R.id.gambar);
 
         Data data = items.get(position);
 
@@ -64,6 +72,7 @@ public class Adapter extends BaseAdapter {
         nama.setText(data.getNama());
         keterangan.setText(data.getKeterangan());
         harga.setText("Rp. " + data.getHarga());
+        thumbNail.setImageUrl(data.getGambar(), imageLoader);
 
         int statusInt = Integer.parseInt(data.getStatus());
         if (statusInt == 1){

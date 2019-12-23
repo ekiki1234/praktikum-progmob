@@ -35,6 +35,12 @@ public class HomeActivity2 extends AppCompatActivity {
                         case R.id.navAcc:
                             selectedFragment = new AccFragment();
                             break;
+                        case R.id.navCart:
+                            selectedFragment = new CartFragment();
+                            break;
+                        case R.id.navHistory:
+                            selectedFragment = new HistoryFragment();
+                            break;
 
                     }
 

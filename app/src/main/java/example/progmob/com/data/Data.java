@@ -3,13 +3,15 @@ package example.progmob.com.data;
 import android.widget.Button;
 
 public class Data {
-    private String id, nama, username, password, no_hp, alamat, kelamin, keterangan, harga, status, counter;
+    private String id, nama, username, password, no_hp, alamat, kelamin, keterangan, harga, status, gambar, jumlah, total, tglTransaksi, tglAmbil, idTransaksi, idUser;
     private Button plus, minus;
+    private int counter;
+
 
     public Data() {
     }
 
-    public Data(String id, String nama, String alamat, String username, String password, String no_hp, String kelamin, String keterangan, String harga, String status, String counter, Button plus, Button minus) {
+    public Data(String id, String nama, String alamat, String username, String password, String no_hp, String kelamin, String keterangan, String harga, String status, Button plus, Button minus, String gambar, String jumlah, String total, String tglTransaksi, String tglAmbil, String idTransaksi, String idUser) {
         this.id = id;
         this.nama = nama;
         this.username = username;
@@ -22,7 +24,14 @@ public class Data {
         this.status = status;
         this.plus = plus;
         this.minus = minus;
-        this.counter = counter;
+        this.gambar = gambar;
+        this.jumlah = jumlah;
+        this.total = total;
+        this.tglTransaksi = tglTransaksi;
+        this.tglAmbil = tglAmbil;
+        this.idTransaksi = idTransaksi;
+        this.idUser = idUser;
+
 
     }
 
@@ -123,12 +132,66 @@ public class Data {
         this.minus = minus;
     }
 
-    public String getCounter(){
+    public int getCounter(){
         return counter;
     }
 
-    public void setCounter(String counter){
+    public void setCounter(int counter){
         this.counter = counter;
+    }
+    public String getGambar() {
+        return gambar;
+    }
+
+    public void setGambar(String gambar) {
+        this.gambar = gambar;
+    }
+    public String getJumlah() {
+        return jumlah;
+    }
+
+    public void setJumlah(String jumlah) {
+        this.jumlah = jumlah;
+    }
+
+    public String getTotal() {
+        return total;
+    }
+
+    public void setTotal(String total) {
+        this.total = total;
+    }
+
+    public String getTglTransaksi() {
+        return tglTransaksi;
+    }
+
+    public void setTglTransaksi(String tglTransaksi) {
+        this.tglTransaksi = tglTransaksi;
+    }
+
+    public String getTglAmbil() {
+        return tglAmbil;
+    }
+
+    public void setTglAmbil(String tglAmbil) {
+        this.tglAmbil = tglAmbil;
+    }
+
+    public String getIdTransaksi(){
+        return idTransaksi;
+    }
+
+    public  void setIdTransaksi(String idTransaksi){
+        this.idTransaksi = idTransaksi;
+    }
+
+    public String getIdUser(){
+        return idUser;
+    }
+
+    public void setIdUser(String idUser){
+        this.idUser = idUser;
     }
 
 

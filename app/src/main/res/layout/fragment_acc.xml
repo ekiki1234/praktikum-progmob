@@ -10,6 +10,12 @@
         android:layout_margin="10dp"
         android:text="ID"/>
 
+    <ImageView
+        android:layout_width="250dp"
+        android:layout_height="250dp"
+        android:src="@drawable/logo"
+        android:layout_centerHorizontal="true"/>
+
     <Button
         android:id="@+id/editBt"
         android:layout_width="match_parent"
@@ -22,7 +28,7 @@
         android:id="@+id/keluarBt"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Keluar"
+        android:text="Sign Out"
         android:layout_centerInParent="true"/>
 
 
