@@ -10,74 +10,74 @@
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="example.progmob.com.HomeActivity2">
 
-    <LinearLayout
+  <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="match_parent">
+
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/swipe_refresh_layout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content">
 
-        <android.support.v4.widget.SwipeRefreshLayout
-            android:id="@+id/swipe_refresh_layout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+      <ListView
+          android:id="@+id/list"
+          android:divider="@color/list_divider"
+          android:dividerHeight="2dp"
+          android:listSelector="@drawable/list_row_selector"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"/>
 
-            <ListView
-                android:id="@+id/list"
-                android:divider="@color/list_divider"
-                android:dividerHeight="2dp"
-                android:listSelector="@drawable/list_row_selector"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+      <Button
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content">
 
-            <Button
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-            </Button>
+      </Button>
 
 
-        </android.support.v4.widget.SwipeRefreshLayout>
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
 
-    </LinearLayout>
+  </LinearLayout>
+
+  <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="50dp"
+      android:background="@color/list_divider"
+      android:layout_alignParentBottom="true"
+      android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:background="@color/list_divider"
         android:layout_alignParentBottom="true"
-        android:orientation="vertical">
+        android:orientation="horizontal">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:background="@color/list_divider"
-            android:layout_alignParentBottom="true"
-            android:orientation="horizontal">
+      <TextView
+          android:id="@+id/grandTotal"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_gravity="center"
+          android:text="Grand Total"
+          android:textSize="18sp"/>
 
-            <TextView
-                android:id="@+id/grandTotal"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:text="Grand Total"
-                android:textSize="18sp"/>
+      <View
+          android:layout_width="0dp"
+          android:layout_height="0dp"
+          android:layout_weight="1" />
 
-            <View
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:layout_weight="1" />
-
-            <Button
-                android:id="@+id/checkOutBt"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@color/colorPrimary"
-                android:text="checkout"/>
-
-
-        </LinearLayout>
+      <Button
+          android:id="@+id/checkOutBt"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:background="@color/colorPrimary"
+          android:text="checkout"/>
 
 
     </LinearLayout>
+
+
+  </LinearLayout>
 
 
 </RelativeLayout>

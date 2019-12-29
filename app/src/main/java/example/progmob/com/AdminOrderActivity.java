@@ -13,6 +13,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
@@ -35,35 +36,27 @@ import example.progmob.com.app.AppController;
 import example.progmob.com.data.Data;
 import example.progmob.com.util.Server;
 
-public class DetailHistoryActivity extends AppCompatActivity implements SwipeRefreshLayout.OnRefreshListener {
+public class AdminOrderActivity extends AppCompatActivity implements SwipeRefreshLayout.OnRefreshListener {
 
-    TextView coba;
     String id_transaksi;
     String role;
     ListView list;
     SwipeRefreshLayout swipe;
     AdapterCart adapter;
     List<Data> itemList = new ArrayList<Data>();
-    AlertDialog.Builder dialog;
-    View dialogView;
-    LayoutInflater inflater;
-    TextView txt_id, txt_nama,txt_keterangan, txt_harga, txt_status;
+    String id;
     int success;
-    String id, nama, keterangan, harga, status, id_user, jumlah, total, tgl_ambil_pesanan, totalCO, username;
     TextView grandTotal;
     String grandTotalString;
-    Button checkOutBt;
-    EditText jumlahEditT;
     int grandTotalInt = 0 ;
-    DatePickerDialog datePickerDialog;
-    SimpleDateFormat dateFormatter;
-    TextView tvDateResult, tvTotal;
-    Button btDatePicker;
+    Button btConfirm, btFinish;
 
 
 
     private static final String TAG = CartFragment.class.getSimpleName();
     private String url_select = Server.URL + "selectDetailHistoryUser.php";
+    private String url_finish = Server.URL + "finishOrder.php";
+    private String url_confirm = Server.URL + "confirmOrder.php";
 
     public static final String TAG_ID     = "id";
     public static final String TAG_ID_USER     = "id_user";
@@ -82,11 +75,10 @@ public class DetailHistoryActivity extends AppCompatActivity implements SwipeRef
 
     String tag_json_obj = "json_obj_req";
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_detail_history);
+        setContentView(R.layout.activity_admin_order);
 
         id_transaksi = getIntent().getStringExtra("id_transaksi");
 
@@ -94,6 +86,22 @@ public class DetailHistoryActivity extends AppCompatActivity implements SwipeRef
         swipe = findViewById(R.id.swipe_refresh_layout);
 
         grandTotal = findViewById(R.id.grandTotal);
+        btConfirm = findViewById(R.id.confirmBt);
+        btFinish = findViewById(R.id.finishBt);
+
+        btConfirm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                confirmOrder();
+            }
+        });
+
+        btFinish.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finishOrder();
+            }
+        });
 
         // untuk mengisi data dari JSON ke dalam adapter
         adapter = new AdapterCart(this, itemList);
@@ -111,8 +119,6 @@ public class DetailHistoryActivity extends AppCompatActivity implements SwipeRef
                 callVolley();
             }
         });
-
-
 
     }
 
@@ -139,8 +145,8 @@ public class DetailHistoryActivity extends AppCompatActivity implements SwipeRef
 
                 try {
                     JSONArray j = new JSONArray(response);
-                    grandTotalInt = 0;
 
+                    grandTotalInt = 0;
                     for (int i = 0; i<response.length(); i++) {
 
                         JSONObject obj = j.getJSONObject(i);
@@ -201,4 +207,101 @@ public class DetailHistoryActivity extends AppCompatActivity implements SwipeRef
 
     }
 
+    private void finishOrder(){
+
+        StringRequest strReq = new StringRequest(Request.Method.POST, url_finish, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                Log.d(TAG, "Response: " + response.toString());
+
+                try {
+                    JSONObject jObj = new JSONObject(response);
+                    success = jObj.getInt(TAG_SUCCESS);
+
+                    // Cek error node pada json
+                    if (success == 1) {
+                        Log.d("Update", jObj.toString());
+
+                        callVolley();
+
+                        Toast.makeText(AdminOrderActivity.this, jObj.getString(TAG_MESSAGE), Toast.LENGTH_LONG).show();
+
+                        adapter.notifyDataSetChanged();
+
+                    } else {
+                        Toast.makeText(AdminOrderActivity.this, jObj.getString(TAG_MESSAGE), Toast.LENGTH_LONG).show();
+                    }
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.e(TAG, "Error: " + error.getMessage());
+                Toast.makeText(AdminOrderActivity.this, error.getMessage(), Toast.LENGTH_LONG).show();
+            }
+        }){
+            @Override
+            protected Map<String, String> getParams() {
+                // Posting parameters ke post url
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("id_transaksi", id_transaksi);
+
+                return params;
+            }
+        };
+        AppController.getInstance().addToRequestQueue(strReq, tag_json_obj);
+    }
+
+
+    private void confirmOrder(){
+
+        StringRequest strReq = new StringRequest(Request.Method.POST, url_confirm, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                Log.d(TAG, "Response: " + response.toString());
+
+                try {
+                    JSONObject jObj = new JSONObject(response);
+                    success = jObj.getInt(TAG_SUCCESS);
+
+                    // Cek error node pada json
+                    if (success == 1) {
+                        Log.d("Update", jObj.toString());
+
+                        callVolley();
+
+                        Toast.makeText(AdminOrderActivity.this, jObj.getString(TAG_MESSAGE), Toast.LENGTH_LONG).show();
+
+                        adapter.notifyDataSetChanged();
+
+                    } else {
+                        Toast.makeText(AdminOrderActivity.this, jObj.getString(TAG_MESSAGE), Toast.LENGTH_LONG).show();
+                    }
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.e(TAG, "Error: " + error.getMessage());
+                Toast.makeText(AdminOrderActivity.this, error.getMessage(), Toast.LENGTH_LONG).show();
+            }
+        }){
+            @Override
+            protected Map<String, String> getParams() {
+                // Posting parameters ke post url
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("id_transaksi", id_transaksi);
+
+                return params;
+            }
+        };
+        AppController.getInstance().addToRequestQueue(strReq, tag_json_obj);
+
+    }
 }

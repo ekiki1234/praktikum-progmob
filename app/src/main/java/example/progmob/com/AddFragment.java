@@ -1,20 +1,22 @@
 package example.progmob.com;
 
+import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.ConnectivityManager;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.room.Room;
 
 import android.util.Base64;
 import android.util.Log;
@@ -24,13 +26,14 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
+
+import example.progmob.com.Model.Kue;
 import example.progmob.com.app.AppController;
 
 import org.json.JSONException;
@@ -44,14 +47,11 @@ import java.util.Map;
 
 import example.progmob.com.util.Server;
 
-import static example.progmob.com.LoginActivity.TAG_ID;
-
 public class AddFragment extends Fragment {
 
     ProgressDialog pDialog;
     Button btTambah, btUpload;
     EditText etNama, etKeterangan, etHarga;
-
 
     ConnectivityManager conMgr;
     ImageView imageView;
@@ -59,6 +59,7 @@ public class AddFragment extends Fragment {
     int success;
     int PICK_IMAGE_REQUEST = 1;
     int bitmap_size = 60; // range 1 - 100
+
 
     private String url = Server.URL + "registerKue.php";
 
@@ -109,6 +110,7 @@ public class AddFragment extends Fragment {
 
     return rootView;
     }
+
 
     public String getStringImage(Bitmap bmp) {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
@@ -182,6 +184,7 @@ public class AddFragment extends Fragment {
                 && conMgr.getActiveNetworkInfo().isAvailable()
                 && conMgr.getActiveNetworkInfo().isConnected()) {
             checkRegister(nama, keterangan, harga);
+            saveOffData();
         } else {
             Toast.makeText(getActivity().getApplicationContext(), "No Internet Connection", Toast.LENGTH_SHORT).show();
         }
@@ -280,6 +283,21 @@ public class AddFragment extends Fragment {
 
         // Adding request to request queue
         AppController.getInstance().addToRequestQueue(strReq, tag_json_obj);
+    }
+
+    private void saveOffData(){
+
+        Kue data = new Kue();
+
+        data.setNama(etNama.getText().toString());
+        data.setKeterangan(etKeterangan.getText().toString());
+        data.setHarga(etHarga.getText().toString());
+        data.setGambar(getStringImage(decoded));
+        data.setStatus("1");
+
+        etNama.setText("");
+        etKeterangan.setText("");
+        etHarga.setText("");
     }
 
 

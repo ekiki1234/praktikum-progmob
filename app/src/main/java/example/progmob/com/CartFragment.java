@@ -6,11 +6,11 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
-import android.support.v4.widget.SwipeRefreshLayout;
-import android.text.InputFilter;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
+
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,7 +19,6 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -28,7 +27,6 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.VolleyLog;
-import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.StringRequest;
 
 import example.progmob.com.adapter.AdapterCart;
@@ -43,9 +41,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
@@ -88,6 +84,7 @@ public class CartFragment extends Fragment implements SwipeRefreshLayout.OnRefre
     private String url_checkOut = Server.URL + "checkOut.php";
     private String url_deleteCartData = Server.URL + "deleteCartData.php";
     private String url_updateCartData = Server.URL + "updateCartData.php";
+    private String url_notif= Server.URL + "notifPesananUser.php";
 
     public static final String TAG_ID     = "id";
     public static final String TAG_ID_USER     = "id_user";
@@ -206,36 +203,38 @@ public class CartFragment extends Fragment implements SwipeRefreshLayout.OnRefre
 
                 //parsing JSON
 
-                    try {
-                        JSONArray j = new JSONArray(response);
-                        for (int i = 0; i<response.length(); i++) {
+                try {
+                    JSONArray j = new JSONArray(response);
+                    grandTotalInt = 0;
 
-                            JSONObject obj = j.getJSONObject(i);
+                    for (int i = 0; i<response.length(); i++) {
 
-                            Data item = new Data();
-                            item.setId(obj.getString(TAG_ID));
-                            item.setNama(obj.getString(TAG_NAMA));
-                            item.setHarga(obj.getString(TAG_HARGA));
-                            item.setJumlah(obj.getString(TAG_JUMLAH));
-                            item.setTotal(obj.getString(TAG_TOTAL));
+                        JSONObject obj = j.getJSONObject(i);
 
-                            if (obj.getString(TAG_GAMBAR) != "") {
-                                item.setGambar(obj.getString(TAG_GAMBAR));
-                            }
+                        Data item = new Data();
+                        item.setId(obj.getString(TAG_ID));
+                        item.setNama(obj.getString(TAG_NAMA));
+                        item.setHarga(obj.getString(TAG_HARGA));
+                        item.setJumlah(obj.getString(TAG_JUMLAH));
+                        item.setTotal(obj.getString(TAG_TOTAL));
 
-                            //menambah item ke array
-                            itemList.add(item);
-
-                            grandTotalInt += Integer.parseInt((obj.getString(TAG_TOTAL)));
-                            grandTotalString = Integer.toString(grandTotalInt);
-                            grandTotal.setText("Grand total: Rp." + grandTotalString);
-
+                        if (obj.getString(TAG_GAMBAR) != "") {
+                            item.setGambar(obj.getString(TAG_GAMBAR));
                         }
 
+                        //menambah item ke array
+                        itemList.add(item);
 
-                    }catch (JSONException e){
-                        e.printStackTrace();
+                        grandTotalInt += Integer.parseInt((obj.getString(TAG_TOTAL)));
+                        grandTotalString = Integer.toString(grandTotalInt);
+                        grandTotal.setText("Grand total: Rp." + grandTotalString);
+
                     }
+
+
+                }catch (JSONException e){
+                    e.printStackTrace();
+                }
 
 
                 // notifikasi adanya perubahan data pada adapter
@@ -377,7 +376,7 @@ public class CartFragment extends Fragment implements SwipeRefreshLayout.OnRefre
         dialog.setIcon(R.mipmap.logo);
         dialog.setTitle("Form Edit Kue");
 
-        dateFormatter = new SimpleDateFormat("YYYY-MM-dd", Locale.US);
+        dateFormatter = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
 
         tvTotal = (TextView) dialogView.findViewById(R.id.tv_grandTotal);
         tvTotal.setText("Harga Total :" + grandTotalString);
@@ -400,10 +399,10 @@ public class CartFragment extends Fragment implements SwipeRefreshLayout.OnRefre
                 tgl_ambil_pesanan = tvDateResult.getText().toString();
                 totalCO = tvTotal.getText().toString();
 
-                moveData();
+//                moveData();
                 tambahTransaksi();
-                updateCartData();
-                deleteCartData();
+//                updateCartData();
+//                deleteCartData();
                 dialog.dismiss();
 
             }
@@ -437,6 +436,7 @@ public class CartFragment extends Fragment implements SwipeRefreshLayout.OnRefre
                         Log.d("update", jObj.toString());
 
                         callVolley();
+                        moveData();
 
 
                         Toast.makeText(getActivity(), jObj.getString(TAG_MESSAGE), Toast.LENGTH_LONG).show();
@@ -496,6 +496,7 @@ public class CartFragment extends Fragment implements SwipeRefreshLayout.OnRefre
                         Log.d("Update", jObj.toString());
 
                         callVolley();
+                        updateCartData();
 
                         Toast.makeText(getActivity(), jObj.getString(TAG_MESSAGE), Toast.LENGTH_LONG).show();
 
@@ -544,6 +545,8 @@ public class CartFragment extends Fragment implements SwipeRefreshLayout.OnRefre
                         Log.d("Update", jObj.toString());
 
                         callVolley();
+                        notif();
+
 
                         Toast.makeText(getActivity(), jObj.getString(TAG_MESSAGE), Toast.LENGTH_LONG).show();
 
@@ -594,6 +597,7 @@ public class CartFragment extends Fragment implements SwipeRefreshLayout.OnRefre
                         Log.d("Update", jObj.toString());
 
                         callVolley();
+                        deleteCartData();
 
                         Toast.makeText(getActivity(), jObj.getString(TAG_MESSAGE), Toast.LENGTH_LONG).show();
 
@@ -626,6 +630,31 @@ public class CartFragment extends Fragment implements SwipeRefreshLayout.OnRefre
         AppController.getInstance().addToRequestQueue(strReq, tag_json_obj);
 
 
+    }
+
+    private void notif(){
+        StringRequest strReq = new StringRequest(Request.Method.POST, url_notif, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                Log.d(TAG, "Token Response: " + response.toString());
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.e(TAG, "Token Error: " + error.getMessage());
+                Toast.makeText(getActivity(), error.getMessage(), Toast.LENGTH_LONG).show();
+            }
+        }){
+            @Override
+            protected Map<String, String> getParams() {
+                // Posting parameters ke post url
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("username", username);
+
+                return params;
+            }
+        };
+        AppController.getInstance().addToRequestQueue(strReq, tag_json_obj);
     }
 
     private void kosong(){

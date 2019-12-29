@@ -1,12 +1,15 @@
 package example.progmob.com;
 
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
+import android.net.ConnectivityManager;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
-import android.support.v4.widget.SwipeRefreshLayout;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.room.Room;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,7 +17,6 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -25,19 +27,21 @@ import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.StringRequest;
 
+import example.progmob.com.Helper.DbHelper;
+import example.progmob.com.Model.Kue;
 import example.progmob.com.adapter.Adapter;
 import example.progmob.com.app.AppController;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import example.progmob.com.data.Data;
@@ -59,6 +63,10 @@ public class HomeFragment extends Fragment implements SwipeRefreshLayout.OnRefre
     int success;
     String id, nama, keterangan, harga, status;
     Button plus, minus;
+    private Context context;
+    List<Kue> daftarKue = new ArrayList<Kue>();;
+    ConnectivityManager conMgr;
+    DbHelper SQLite = new DbHelper(getActivity());
 
     private static final String TAG = HomeFragment.class.getSimpleName();
     private String url_select = Server.URL + "selectKue.php";
@@ -83,10 +91,13 @@ public class HomeFragment extends Fragment implements SwipeRefreshLayout.OnRefre
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_home, container, false);
 
+        SQLite = new DbHelper(getActivity().getApplicationContext());
+
         list = rootView.findViewById(R.id.list);
         swipe = rootView.findViewById(R.id.swipe_refresh_layout);
 
         role = getActivity().getIntent().getStringExtra(TAG_ROLE);
+
 
         // untuk mengisi data dari JSON ke dalam adapter
         adapter = new Adapter(getActivity(), itemList);
@@ -98,10 +109,26 @@ public class HomeFragment extends Fragment implements SwipeRefreshLayout.OnRefre
         swipe.post(new Runnable() {
             @Override
             public void run() {
-                swipe.setRefreshing(true);
-                itemList.clear();
-                adapter.notifyDataSetChanged();
-                callVolley();
+
+                conMgr = (ConnectivityManager) getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
+                {
+                    if (conMgr.getActiveNetworkInfo() != null
+                            && conMgr.getActiveNetworkInfo().isAvailable()
+                            && conMgr.getActiveNetworkInfo().isConnected()) {
+
+                        swipe.setRefreshing(true);
+                        itemList.clear();
+                        adapter.notifyDataSetChanged();
+                        SQLite.delete();
+                        callVolley();
+
+                    } else {
+                        Toast.makeText(getActivity().getApplicationContext(), "No Internet Connection",
+                                Toast.LENGTH_LONG).show();
+                        getAllData();
+                    }
+                }
+
             }
         });
 
@@ -137,9 +164,25 @@ public class HomeFragment extends Fragment implements SwipeRefreshLayout.OnRefre
 
     @Override
     public void onRefresh() {
-        itemList.clear();
-        adapter.notifyDataSetChanged();
-        callVolley();
+
+        conMgr = (ConnectivityManager) getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
+        {
+            if (conMgr.getActiveNetworkInfo() != null
+                    && conMgr.getActiveNetworkInfo().isAvailable()
+                    && conMgr.getActiveNetworkInfo().isConnected()) {
+
+                swipe.setRefreshing(true);
+                itemList.clear();
+                adapter.notifyDataSetChanged();
+                SQLite.delete();
+                callVolley();
+
+            } else {
+                Toast.makeText(getActivity().getApplicationContext(), "No Internet Connection",
+                        Toast.LENGTH_LONG).show();
+
+            }
+        }
 
     }
 
@@ -172,6 +215,15 @@ public class HomeFragment extends Fragment implements SwipeRefreshLayout.OnRefre
                             item.setGambar(obj.getString(TAG_GAMBAR));
                         }
 
+                        String idx = obj.getString(TAG_ID);
+                        String namax = obj.getString(TAG_NAMA);
+                        String keteranganx = obj.getString(TAG_KETERANGAN);
+                        String hargax = obj.getString(TAG_HARGA);
+                        String gambarx = obj.getString(TAG_GAMBAR);
+                        String statusx = obj.getString(TAG_STATUS);
+
+                        SQLite.insert(namax, keteranganx, hargax, gambarx, statusx );
+
                         //menambah item ke array
                         itemList.add(item);
 
@@ -199,6 +251,32 @@ public class HomeFragment extends Fragment implements SwipeRefreshLayout.OnRefre
 
     }
 
+    private void getAllData() {
+        ArrayList<HashMap<String, String>> row = SQLite.getAllData();
+
+        for (int i = 0; i < row.size(); i++) {
+            String id = row.get(i).get(TAG_ID);
+            String nama = row.get(i).get(TAG_NAMA);
+            String keterangan = row.get(i).get(TAG_KETERANGAN);
+            String harga = row.get(i).get(TAG_HARGA);
+            String gambar = row.get(i).get(TAG_GAMBAR);
+            String status = row.get(i).get(TAG_STATUS);
+
+            Data data = new Data();
+
+            data.setId(id);
+            data.setNama(nama);
+            data.setKeterangan(keterangan);
+            data.setHarga(harga);
+            data.setGambar(gambar);
+            data.setStatus(status);
+
+            itemList.add(data);
+        }
+
+        adapter.notifyDataSetChanged();
+    }
+
     private void edit(final String idx){
         StringRequest strReq = new StringRequest(Request.Method.POST, url_edit, new Response.Listener<String>() {
             @Override
@@ -215,6 +293,8 @@ public class HomeFragment extends Fragment implements SwipeRefreshLayout.OnRefre
                         String namax = jObj.getString(TAG_NAMA);
                         String keteranganx = jObj.getString(TAG_KETERANGAN);
                         String hargax = jObj.getString(TAG_HARGA);
+
+
 
                         DialogForm(idx, namax, keteranganx, hargax, "UPDATE");
 
@@ -405,10 +485,10 @@ public class HomeFragment extends Fragment implements SwipeRefreshLayout.OnRefre
                 // Posting parameters ke post url
                 Map<String, String> params = new HashMap<String, String>();
 
-                    params.put("id", id);
-                    params.put("nama_kue", nama);
-                    params.put("keterangan", keterangan);
-                    params.put("harga", harga);
+                params.put("id", id);
+                params.put("nama_kue", nama);
+                params.put("keterangan", keterangan);
+                params.put("harga", harga);
 
                 return params;
             }

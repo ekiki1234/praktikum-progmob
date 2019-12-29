@@ -7,8 +7,8 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v4.widget.SwipeRefreshLayout;
+import androidx.fragment.app.Fragment;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -24,7 +24,6 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.VolleyLog;
-import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.StringRequest;
 
 import org.json.JSONArray;
@@ -162,7 +161,6 @@ public class HistoryFragment extends Fragment implements SwipeRefreshLayout.OnRe
             url = url_select;
         }else{
             url= url_select_user;
-
         }
 
         //membuat request JSON
@@ -230,12 +228,19 @@ public class HistoryFragment extends Fragment implements SwipeRefreshLayout.OnRe
     }
 
     private void detail(final String idx){
-        Toast.makeText(getContext(), idx, Toast.LENGTH_LONG).show();
-        Intent intent = new Intent(getActivity(), DetailHistoryActivity.class);
-        intent.putExtra("id_transaksi", idx);
+        int roleInt=Integer.parseInt(role);
+        if(roleInt == 1){
+            Intent intent = new Intent(getActivity(), AdminOrderActivity.class);
+            intent.putExtra("id_transaksi", idx);
 
-        startActivity(intent);
+            startActivity(intent);
+        }else{
+            Intent intent = new Intent(getActivity(), DetailHistoryActivity.class);
+            intent.putExtra("id_transaksi", idx);
+
+            startActivity(intent);
+
+        }
+
     }
-
-
 }

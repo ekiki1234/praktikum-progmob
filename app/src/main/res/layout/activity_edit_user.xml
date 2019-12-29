@@ -8,174 +8,174 @@
     android:layout_margin="20dp"
     tools:context=".EditUserActivity">
 
-    <TextView
-        android:id="@+id/txt_id"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_margin="10dp"
-        android:text="ID"/>
+  <TextView
+      android:id="@+id/txt_id"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_gravity="center"
+      android:layout_margin="10dp"
+      android:text="ID"/>
 
-    <TextView
-        android:id="@+id/txt_role"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_margin="10dp"
-        android:text="ID"/>
+  <TextView
+      android:id="@+id/txt_role"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_gravity="center"
+      android:layout_margin="10dp"
+      android:text="ID"/>
 
-    <ScrollView
+  <ScrollView
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content">
+
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
-        <LinearLayout
+      <TextView
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_marginBottom="5dp"
+          android:text="Username" />
+
+      <EditText
+          android:id="@+id/usernameEt"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginBottom="10dp"
+          android:hint="Masukan Username"
+          android:inputType="text" />
+
+      <TextView
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginBottom="5dp"
+          android:text="Nama" />
+
+      <EditText
+          android:id="@+id/namaEt"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginBottom="10dp"
+          android:hint="Masukan Nama" />
+
+      <TextView
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_marginBottom="5dp"
+          android:text="Password" />
+
+      <EditText
+          android:id="@+id/passEt"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginBottom="10dp"
+          android:hint="Masukan Password"
+          android:inputType="textPassword" />
+
+      <TextView
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_marginBottom="5dp"
+          android:text="Confirm Password" />
+
+      <EditText
+          android:id="@+id/passConfirmEt"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:hint="Masukan Password"
+          android:inputType="textPassword" />
+
+      <CheckBox
+          android:id="@+id/showPassCb"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:text="Show Password"
+          android:layout_marginBottom="10dp"/>
+
+
+      <TextView
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:text="No. HP" />
+
+      <EditText
+          android:id="@+id/hpEt"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:hint="Masukan Nomor HP"
+          android:inputType="phone"
+          android:maxEms="12"
+          android:minEms="10" />
+
+      <TextView
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginBottom="5dp"
+          android:text="alamat" />
+
+      <EditText
+          android:id="@+id/alamatEt"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginBottom="10dp"
+          android:hint="Masukan Alamat" />
+
+      <TextView
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginBottom="5dp"
+          android:text="Jenis Kelamin" />
+
+      <LinearLayout
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginBottom="5dp"
+          android:orientation="vertical">
+
+        <RadioGroup
+            android:id="@+id/radioGrupKelamin"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            >
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="5dp"
-                android:text="Username" />
+          <RadioButton
+              android:id="@+id/radioMale"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:text="Laki-Laki" />
 
-            <EditText
-                android:id="@+id/usernameEt"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp"
-                android:hint="Masukan Username"
-                android:inputType="text" />
+          <RadioButton
+              android:id="@+id/radioFemale"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:text="Perempuan" />
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="5dp"
-                android:text="Nama" />
+        </RadioGroup>
 
-            <EditText
-                android:id="@+id/namaEt"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp"
-                android:hint="Masukan Nama" />
+      </LinearLayout>
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="5dp"
-                android:text="Password" />
+      <Button
+          android:id="@+id/daftarBt"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_gravity="center"
+          android:layout_marginBottom="5dp"
+          android:text="Simpan"
+          android:textStyle="bold" />
 
-            <EditText
-                android:id="@+id/passEt"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp"
-                android:hint="Masukan Password"
-                android:inputType="textPassword" />
+      <Button
+          android:id="@+id/backBt"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_gravity="center"
+          android:layout_marginBottom="20dp"
+          android:text="Kembali"
+          android:textStyle="bold" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="5dp"
-                android:text="Confirm Password" />
+    </LinearLayout>
 
-            <EditText
-                android:id="@+id/passConfirmEt"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Masukan Password"
-                android:inputType="textPassword" />
-
-            <CheckBox
-                android:id="@+id/showPassCb"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Show Password"
-                android:layout_marginBottom="10dp"/>
-
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="No. HP" />
-
-            <EditText
-                android:id="@+id/hpEt"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Masukan Nomor HP"
-                android:inputType="phone"
-                android:maxEms="12"
-                android:minEms="10" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="5dp"
-                android:text="alamat" />
-
-            <EditText
-                android:id="@+id/alamatEt"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp"
-                android:hint="Masukan Alamat" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="5dp"
-                android:text="Jenis Kelamin" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="5dp"
-                android:orientation="vertical">
-
-                <RadioGroup
-                    android:id="@+id/radioGrupKelamin"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    >
-
-                    <RadioButton
-                        android:id="@+id/radioMale"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Laki-Laki" />
-
-                    <RadioButton
-                        android:id="@+id/radioFemale"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Perempuan" />
-
-                </RadioGroup>
-
-            </LinearLayout>
-
-            <Button
-                android:id="@+id/daftarBt"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginBottom="5dp"
-                android:text="Simpan"
-                android:textStyle="bold" />
-
-            <Button
-                android:id="@+id/backBt"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginBottom="20dp"
-                android:text="Kembali"
-                android:textStyle="bold" />
-
-        </LinearLayout>
-
-    </ScrollView>
+  </ScrollView>
 
 </LinearLayout>

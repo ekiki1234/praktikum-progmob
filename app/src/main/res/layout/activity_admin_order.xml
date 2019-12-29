@@ -29,7 +29,7 @@
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:background="@color/list_divider"
-        android:layout_alignParentBottom="true"
+        android:layout_above="@+id/button"
         android:orientation="horizontal">
 
         <TextView
@@ -46,6 +46,35 @@
             android:layout_weight="1" />
 
     </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/button"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:orientation="horizontal"
+        android:layout_alignParentBottom="true"
+        android:weightSum="2.0"
+        style="?attr/buttonBarStyle">
+        <Button
+            android:id="@+id/confirmBt"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            style="?attr/buttonBarButtonStyle"
+            android:text="Confirm Order"/>
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="@android:color/white"/>
+        <Button
+            android:id="@+id/finishBt"
+            style="?attr/buttonBarButtonStyle"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="Finish Order"/>
+    </LinearLayout>
+
 
 
 </RelativeLayout>

@@ -6,58 +6,58 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+  <LinearLayout
+      android:orientation="horizontal"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content">
+
+    <com.android.volley.toolbox.NetworkImageView
+        android:id="@+id/gambar"
+        android:layout_width="60dp"
+        android:layout_height="60dp" />
+
     <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_width="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-        <com.android.volley.toolbox.NetworkImageView
-            android:id="@+id/gambar"
-            android:layout_width="60dp"
-            android:layout_height="60dp" />
+      <TextView
+          android:id="@+id/id"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:visibility="gone" />
 
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
+      <TextView
+          android:id="@+id/nama"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_marginBottom="5dp"
+          android:textStyle="bold"
+          android:text="nama"/>
 
-            <TextView
-                android:id="@+id/id"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:visibility="gone" />
+      <TextView
+          android:id="@+id/harga"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text="harga"/>
 
-            <TextView
-                android:id="@+id/nama"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="5dp"
-                android:textStyle="bold"
-                android:text="nama"/>
-
-            <TextView
-                android:id="@+id/harga"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="harga"/>
-
-            <TextView
-                android:id="@+id/keterangan"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="keterangan"/>
-
-        </LinearLayout>
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="horizontal">
-
-        </RelativeLayout>
+      <TextView
+          android:id="@+id/keterangan"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text="keterangan"/>
 
     </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
+
+    </RelativeLayout>
+
+  </LinearLayout>
 
 
 </LinearLayout>

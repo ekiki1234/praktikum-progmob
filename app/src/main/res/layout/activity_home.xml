@@ -8,18 +8,18 @@
     tools:context=".HomeActivity">
 
 
-    <FrameLayout
-        android:id="@+id/fragmentContainer"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_above="@id/bottomNav"/>
+  <FrameLayout
+      android:id="@+id/fragmentContainer"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:layout_above="@id/bottomNav"/>
 
-     <android.support.design.widget.BottomNavigationView
-         android:id="@+id/bottomNav"
-         android:layout_width="match_parent"
-         android:layout_height="wrap_content"
-         android:layout_alignParentBottom="true"
-         app:menu="@menu/bottom_navigation"
-         android:background="?android:attr/windowBackground"/>
+  <com.google.android.material.bottomnavigation.BottomNavigationView
+      android:id="@+id/bottomNav"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_alignParentBottom="true"
+      app:menu="@menu/bottom_navigation"
+      android:background="?android:attr/windowBackground"/>
 
 </RelativeLayout>
