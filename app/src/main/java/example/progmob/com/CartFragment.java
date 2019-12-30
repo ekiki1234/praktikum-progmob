@@ -649,7 +649,7 @@ public class CartFragment extends Fragment implements SwipeRefreshLayout.OnRefre
             protected Map<String, String> getParams() {
                 // Posting parameters ke post url
                 Map<String, String> params = new HashMap<String, String>();
-                params.put("username", username);
+                params.put("id_user", id_user);
 
                 return params;
             }

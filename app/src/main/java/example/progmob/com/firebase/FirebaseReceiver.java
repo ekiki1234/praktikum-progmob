@@ -24,28 +24,31 @@ public class FirebaseReceiver  extends FirebaseMessagingService{
 
     SharedPreferences sharedpreferences;
     public static final String TAG_ID = "id";
-    String id,haha1;
-    String bram="bramcool";
-    String cool="bramsss";
+    public static final String TAG_USERNAME = "username";
+    String id, username,haha1;
+
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
         //handle when receive notification via data event
         sharedpreferences = getSharedPreferences(LoginActivity.my_shared_preferences, Context.MODE_PRIVATE);
 //        haha1=;
         id = sharedpreferences.getString(TAG_ID, null);
+        username = sharedpreferences.getString(TAG_USERNAME, null);
+        String judul="Notif Untuk "+ username;
+        String pesan="Ada Update Pesanan";
         Log.d("haha",id);
         Log.d("ini",remoteMessage.getNotification().getTitle());
         if(remoteMessage.getData().size()>0){
             if(remoteMessage.getData().get("title").equals(id)){
 //                showNotification(remoteMessage.getData().get("title"),remoteMessage.getData().get("message"));
-                showNotification(bram,cool);
+                showNotification(judul,pesan);
             }
         }
 
         //handle when receive notification
         if(remoteMessage.getNotification()!=null){
             if(remoteMessage.getNotification().getTitle().equals(id)){
-                showNotification(bram,cool);
+                showNotification(judul,pesan);
             }
 
         }

@@ -57,6 +57,8 @@ public class AdminOrderActivity extends AppCompatActivity implements SwipeRefres
     private String url_select = Server.URL + "selectDetailHistoryUser.php";
     private String url_finish = Server.URL + "finishOrder.php";
     private String url_confirm = Server.URL + "confirmOrder.php";
+    private String url_notif_confirm = Server.URL + "notifConfirm.php";
+    private String url_notif_finish = Server.URL + "notifFinish.php";
 
     public static final String TAG_ID     = "id";
     public static final String TAG_ID_USER     = "id_user";
@@ -93,6 +95,7 @@ public class AdminOrderActivity extends AppCompatActivity implements SwipeRefres
             @Override
             public void onClick(View v) {
                 confirmOrder();
+                notifConfirm();
             }
         });
 
@@ -100,6 +103,7 @@ public class AdminOrderActivity extends AppCompatActivity implements SwipeRefres
             @Override
             public void onClick(View v) {
                 finishOrder();
+                notifFinish();
             }
         });
 
@@ -205,6 +209,56 @@ public class AdminOrderActivity extends AppCompatActivity implements SwipeRefres
         // menambah request ke request queue
         AppController.getInstance().addToRequestQueue(strReq, tag_json_obj);
 
+    }
+
+    private void notifFinish(){
+        StringRequest strReq = new StringRequest(Request.Method.POST, url_notif_finish, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                Log.d(TAG, "Token Response: " + response.toString());
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.e(TAG, "Token Error: " + error.getMessage());
+                Toast.makeText(AdminOrderActivity.this, error.getMessage(), Toast.LENGTH_LONG).show();
+            }
+        }){
+            @Override
+            protected Map<String, String> getParams() {
+                // Posting parameters ke post url
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("id_transaksi", id_transaksi);
+
+                return params;
+            }
+        };
+        AppController.getInstance().addToRequestQueue(strReq, tag_json_obj);
+    }
+
+    private void notifConfirm(){
+        StringRequest strReq = new StringRequest(Request.Method.POST, url_notif_confirm, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                Log.d(TAG, "Token Response: " + response.toString());
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.e(TAG, "Token Error: " + error.getMessage());
+                Toast.makeText(AdminOrderActivity.this, error.getMessage(), Toast.LENGTH_LONG).show();
+            }
+        }){
+            @Override
+            protected Map<String, String> getParams() {
+                // Posting parameters ke post url
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("id_transaksi", id_transaksi);
+
+                return params;
+            }
+        };
+        AppController.getInstance().addToRequestQueue(strReq, tag_json_obj);
     }
 
     private void finishOrder(){

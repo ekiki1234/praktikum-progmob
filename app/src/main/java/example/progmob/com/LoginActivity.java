@@ -80,7 +80,6 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        FirebaseMessaging.getInstance().subscribeToTopic("allDevices");
 
         conMgr = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
         {
@@ -93,10 +92,14 @@ public class LoginActivity extends AppCompatActivity {
             }
         }
 
+        FirebaseMessaging.getInstance().subscribeToTopic("allDevices");
+
         btDaftar = findViewById(R.id.daftarBt);
         btDaftar.setOnClickListener(clickListener);
         btMasuk = findViewById(R.id.masukBt);
         btMasuk.setOnClickListener(clickListener);
+
+        Log.d("Tooken ",""+ FirebaseInstanceId.getInstance().getToken());
 
         etUsername = findViewById(R.id.usernameEt);
         etpassword = findViewById(R.id.passEt);
